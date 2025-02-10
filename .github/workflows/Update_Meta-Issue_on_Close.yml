@@ -1,0 +1,32 @@
+name: "Update Meta-Issue on Close"
+
+on:
+  issues:
+    types: [closed]  # Trigger when a student closes an issue (task completion)
+
+permissions:
+  issues: write
+
+jobs:
+  update-meta-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Extract Meta-Issue Link from Issue Body
+        id: extract_meta_issue
+        run: |
+          META_ISSUE_URL=$(grep -oE 'https://github.com/CHI-CityTech/StudentResearch/issues/[0-9]+' "$GITHUB_EVENT_PATH" | head -n 1)
+          if [ -z "$META_ISSUE_URL" ]; then
+            echo "No Meta-Issue link found. Skipping update."
+            exit 0
+          fi
+          echo "META_ISSUE_URL=$META_ISSUE_URL" >> $GITHUB_ENV
+
+      - name: Post Update to Meta-Issue in StudentResearch
+        if: env.META_ISSUE_URL != ''
+        run: |
+          gh issue comment create "${META_ISSUE_URL##*/}" --repo CHI-CityTech/StudentResearch --body "✅ **Milestone Completed in [${{ github.repository }}]**: ${{ github.event.issue.title }} - [View Details](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
