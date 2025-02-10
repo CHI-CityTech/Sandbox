@@ -1,13 +1,18 @@
 name: "Auto-Post Milestone Updates"
+
 on:
   issues:
-    types: [closed]
+    types: [closed]  # Trigger when a student closes an issue (task completion)
+
+permissions:
+  issues: write
+  discussions: write
 
 jobs:
   post-milestone-update:
     runs-on: ubuntu-latest
     steps:
-      - name: Post Update to Discussion
+      - name: Post Update to Discussion in StudentResearch
         run: |
           gh discussion comment create 1 --body "✅ **Milestone Completed in [${{ github.repository }}]**: ${{ github.event.issue.title }} - [View Details](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})"
         env:
