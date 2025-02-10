@@ -12,6 +12,19 @@ jobs:
   post-milestone-update:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Check GitHub CLI Version
+        run: |
+          gh --version
+
+      - name: Install Latest GitHub CLI (if needed)
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+          gh --version
+
       - name: Post Update to Discussion in StudentResearch
         run: |
           gh discussion comment create 1 --body "✅ **Milestone Completed in [${{ github.repository }}]**: ${{ github.event.issue.title }} - [View Details](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})"
