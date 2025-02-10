@@ -15,15 +15,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Check GitHub CLI Version
+      - name: Debug GitHub CLI Version and Available Commands
         run: |
           gh --version
+          gh help
 
-      - name: Install Latest GitHub CLI (if needed)
+      - name: Install GitHub CLI Extension for Discussions (If Needed)
         run: |
-          sudo apt update
-          sudo apt install -y gh
-          gh --version
+          gh extension install github/gh-discussions
+          gh extension list
+
+      - name: Debug Extensions
+        run: |
+          gh extension list
+          gh help discussion
 
       - name: Post Update to Discussion in StudentResearch
         run: |
