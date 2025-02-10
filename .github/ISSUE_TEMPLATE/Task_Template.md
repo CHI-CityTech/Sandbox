@@ -17,7 +17,11 @@ projects: ["{{ repository }}"]
 ✅ **Status:** `[In Progress / Blocked / Completed]`  
 
 🔗 **Project Repository:** [{{ repository }}](https://github.com/{{ repository }})  
-🔗 **Meta-Project Board:** [CHI Student Research Board](https://github.com/CHI-CityTech/StudentResearch/projects)  
+🔗 **Meta-Project Board:** [CHI Student Research Board](https://github.com/CHI-CityTech/StudentResearch/projects)
+
+📌 **Meta-Issue Tracking:**  
+🔗 **[StudentResearch Issue #XX](https://github.com/CHI-CityTech/StudentResearch/issues/XX)**  
+_(Replace XX with the correct issue number for your research project.)_
 
 ---
 
